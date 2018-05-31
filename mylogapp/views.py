@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import TopicForm
+
+from mylogapp.models import Topic
+from .forms import TopicForm, EntryForm
 from django.urls import reverse
-from .models import Topic
 # Create your views here.
 
 
@@ -34,3 +35,18 @@ def new_topic(request):
 
     context = {"form": form}
     return render(request, "mylogapp/new_topic.html", context)
+
+
+def new_entry(request, topic_id):
+    topic = Topic.objects.get(id=topic_id)
+    if request.method != "POST":
+        form = EntryForm()
+    else:
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.topic = topic
+            new_entry.save()
+            return HttpResponseRedirect(reverse("mylogapp:topic", args=[topic_id]))
+    context = {"topic": topic, "form": form}
+    return render(request, "mylogapp/new_entry.html", context)

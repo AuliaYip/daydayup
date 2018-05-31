@@ -5,17 +5,21 @@
     <p>Topic:{{ topic }}</p>
 
     <p>Entryies:</p>
-    <ul>
-        {% for entry in 'entries' %}
-            <li>
-                <p>{{ entry.date_added|date:'M d. Y H:i' }}</p>
-                <p>{{ entry.text|linebreaks }}</p>
-            </li>
-            {% empty %}
-                <li>
-                    There are no entries for this topic yet.
-                </li>
-        {% endfor %}
+{#    <ul>#}
+{#        {% for entry in 'entries' %}#}
+{#            <li>#}
+{#                <p>{{ entry.date_added|date:'M d. Y H:i' }}</p>#}
+{#                <p>{{ entry.text|linebreaks }}</p>#}
+{#            </li>#}
+{#            {% empty %}#}
+{#                <li>#}
+{#                    There are no entries for this topic yet.#}
+{#                </li>#}
+{#        {% endfor %}#}
+{##}
+{#    </ul>#}
+    <p>
+        <a href="{% url 'mylogapp:new_entry' topic.id %}">add new entry</a>
+    </p>
 
-    </ul>
 {% endblock content %}
