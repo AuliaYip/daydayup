@@ -1,6 +1,12 @@
+{% block content %}
 <p>
     <a href="{% url 'mylogapp:index' %}">my first app</a>
     <a href="{% url 'mylogapp:topics' %}">my topic page</a>
+    {% if user.is_authentiucated %}
+        hello,{{ user.username }}
+    {% else %}
+        <a href="{% url 'users:login' %}"
+    {% endif %}
 </p>
 
-{% block content %}{% endblock content %}
+{% endblock content %}
